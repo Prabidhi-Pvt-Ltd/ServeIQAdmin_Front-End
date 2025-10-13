@@ -1,14 +1,15 @@
+import { Navbar } from "./components/common/navbar";
+import { Footer } from "./components/common/footer";
+import { Home } from "./pages";
 
-
-import Hero from './pages/index'
-import Services from './pages/Services'
 function App() {
   return (
     <>
-     <Hero />
-     <Services />
+      <Navbar />
+      <Home />
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

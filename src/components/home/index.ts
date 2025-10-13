@@ -1,0 +1,10 @@
+export { default as Hero } from "./Hero";
+export { default as About } from "./About";
+export { default as Services } from "./Services";
+export { default as Info } from "./Info";
+export { default as Feature } from "./Feature";
+export { default as Premium } from "./Premium";
+export { default as NationSection } from "./NationSection";
+export { default as Blog } from "./Blog";
+export { default as Connect } from "./Connect";
+export { default as CountrySection } from "./CountrySection";

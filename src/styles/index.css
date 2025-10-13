@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;900&display=swap");
+
+
+
+@import "tailwindcss";
+@theme {
+  --color-primary: #C71313;
+}
+ 
+
+ @utility container {
+  margin-inline: auto;
+  padding-inline: 1em;
+
+  @media (min-width: 640px) {
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1280px; /* Fix width in lg (before xl) */
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 3rem; /* Slightly increase instead of keeping same */
+  }
+
+  @media (min-width: 1536px) {
+    padding-inline: 4rem; /* Reduce from 6rem to 4rem */
+  }
+}
+
