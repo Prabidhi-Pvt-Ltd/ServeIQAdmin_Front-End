@@ -1,14 +1,8 @@
 import flag from "../../assets/images/flag.png";
-import blurImage from "../../assets/images/blurImage.png";
 
 const NationSection = () => {
   return (
     <section className=" relative flex items-center justify-center ">
-      <div
-        className="container absolute inset-0 bg-cover bg-center blur-md opacity-60"
-        style={{ backgroundImage: `url(${blurImage})` }}
-      ></div>
-
       <div className="relative flex flex-col items-center justify-center text-center gap-2 px-4">
         <img
           src={flag}

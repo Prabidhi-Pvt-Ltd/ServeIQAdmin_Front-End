@@ -10,6 +10,12 @@ import {
   Connect,
   CountrySection,
 } from "../components/home";
+// import {
+//   SubscribePopup,
+//   SignIn,
+//   Password,
+//   SignUp,
+// } from "../components/susbscribe";
 
 export default function Home() {
   return (
@@ -24,6 +30,10 @@ export default function Home() {
       <NationSection />
       <Blog />
       <Connect />
+      {/* <SubscribePopup />
+
+      <Password />
+      <SignUp /> */}
     </>
   );
 }

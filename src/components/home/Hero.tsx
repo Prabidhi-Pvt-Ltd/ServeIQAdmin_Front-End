@@ -24,10 +24,10 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="w-full relative overflow-hidden py-12 md:py-16 mt-6 sm:mt-10 bg-white"
+      className="w-full relative  overflow-hidden mt-6 py-20 sm:mt-10 bg-"
     >
-      <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center min-h-[calc(100vh-6rem)]">
+      <div className=" mx-auto relative z-10 lg:px-30  sm:px-6 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2  items-center min-h-[calc(100vh-6rem)]">
           <div className="space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-pink-100 rounded-full px-4 py-2">
               <span className="text-pink-600 text-sm sm:text-base">
@@ -92,20 +92,27 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          <div className="relative flex justify-center lg:justify-end mt-10 lg:mt-0">
-            <div className="absolute left-1/2 sm:left-40 top-1/2 -translate-y-1/2 bg-red-700 h-[200px] sm:h-[250px] md:h-[300px] w-[350px] sm:w-[480px] md:w-[620px] rounded-full -z-10"></div>
+          <div className="relative flex justify-center  mt-10 lg:mt-0 h-[300px] sm:h-[350px] md:h-[400px] lg:h-[550px]">
+            <div
+              className="absolute -right-40 top-1/2 -translate-y-1/2 bg-red-600 rounded-l-full -z-10"
+              style={{
+                width: "calc(100% + 100px)",
+                height: "75%",
+                maxWidth: "800px",
+              }}
+            ></div>
 
             <div
               className={`relative transition-all duration-1000 ease-out transform ${
                 isVisible
                   ? "translate-x-0 opacity-100"
                   : "translate-x-full opacity-0"
-              }`}
+              } flex items-center justify-center h-full`}
             >
               <img
                 src={currentImage.src}
                 alt={currentImage.name}
-                className="object-cover w-[180px] sm:w-[260px] md:w-[360px] lg:w-[420px] xl:w-[520px] 2xl:w-[580px] mx-auto -mt-10 sm:-mt-20"
+                className="object-contain h-[90%] w-auto absolute lg:bottom-18 bottom-8 md:-top-2 max-w-none"
               />
             </div>
           </div>

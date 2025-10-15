@@ -62,7 +62,7 @@ const CountrySection: React.FC = () => {
               <img
                 src={country.image}
                 alt={country.name}
-                className="w-full h-40 object-cover"
+                className="w-full h-40 object-cover rounded-2xl"
               />
 
               <div className="p-4 flex flex-col items-start">

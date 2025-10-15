@@ -4,9 +4,7 @@ import mobile3 from "../../assets/images/mobile3.png";
 
 export default function Info() {
   return (
-    // Removed min-h-screen to allow the height to collapse to content size
     <div className="bg-white py-16 md:py-20">
-      {/* Reduced horizontal padding for a slightly wider look on Lg screens */}
       <div className="px-6 md:px-12 lg:px-20 xl:px-32">
         <div className="flex flex-col items-center gap-10 md:gap-12 w-full">
           {/* Heading Section - Reduced font sizes slightly for the "not too big" feel */}
