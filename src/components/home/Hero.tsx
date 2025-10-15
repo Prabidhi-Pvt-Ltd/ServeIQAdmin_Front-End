@@ -22,14 +22,11 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section
-      id="hero"
-      className="w-full relative  overflow-hidden mt-6 py-20 sm:mt-10 bg-"
-    >
-      <div className=" mx-auto relative z-10 lg:px-30  sm:px-6 ">
+    <section id="hero" className="w-full relative  overflow-hidden lg:py-20  ">
+      <div className=" mx-auto py-10 relative z-10 lg:px-30 bg-[#F9E7E7] sm:px-6 ">
         <div className="grid grid-cols-1 lg:grid-cols-2  items-center min-h-[calc(100vh-6rem)]">
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-pink-100 rounded-full px-4 py-2">
+          <div className="space-y-3 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 bg-pink-100 rounded-full px-4 pt-10 ">
               <span className="text-pink-600 text-sm sm:text-base">
                 ✨ Explore our free plan
               </span>

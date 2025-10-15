@@ -3,12 +3,16 @@ import { Menu, X, Search, Loader2 } from "lucide-react";
 import logo from "../../../assets/images/logo.png";
 import Cookies from "js-cookie";
 import { services } from "../../../data/Services";
-
+import SignIn from "../signIn/SignIn";
+import SignUp from "../register/SignUp";
 export default function Navbar() {
+  const [showLogin, setShowLogin] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showLanguages, setShowLanguages] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [query, setQuery] = useState("");
+  const [showRegister, setShowRegister] = useState(false);
+
   const [filteredServices, setFilteredServices] = useState<typeof services>([]);
   const languages = [
     {
@@ -275,6 +279,8 @@ export default function Navbar() {
           <Loader2 className="w-16 h-16 text-white animate-spin" />
         </div>
       )}
+      <SignIn isOpen={showLogin} onClose={() => setShowLogin(false)} />
+      <SignUp isOpen={showRegister} onClose={() => setShowRegister(false)} />
 
       <nav className="bg-white border-b border-neutral-200 fixed top-0 left-0 w-full z-50">
         <div className=" mx-auto px-4 sm:px-6 lg:px-10 py-3">
@@ -388,10 +394,16 @@ export default function Navbar() {
               </div>
 
               {/* Register & Login */}
-              <button className="px-5 py-2 rounded-2xl border-2 border-red-700 text-red-700 text-sm font-semibold hover:bg-red-50 transition">
+              <button
+                onClick={() => setShowRegister(true)}
+                className="px-5 py-2 rounded-2xl border-2 border-red-700 text-red-700 text-sm font-semibold hover:bg-red-50 transition"
+              >
                 Register
               </button>
-              <button className="px-5 py-2 rounded-2xl bg-red-700 text-white text-sm font-semibold hover:bg-red-800 transition">
+              <button
+                onClick={() => setShowLogin(true)}
+                className="px-5 py-2 rounded-2xl bg-red-700 text-white text-sm font-semibold hover:bg-red-800 transition"
+              >
                 Login
               </button>
             </div>

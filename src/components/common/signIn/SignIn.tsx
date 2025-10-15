@@ -1,5 +1,5 @@
 // src/components/common/SignIn/SignIn.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 type Props = {
@@ -8,9 +8,12 @@ type Props = {
 };
 
 const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
+  const [isPasswordStep, setIsPasswordStep] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     if (!isOpen) return;
-    // lock scroll when modal open
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -28,20 +31,31 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const handleSignIn = () => {
+    if (!isPasswordStep) {
+      if (!email.trim()) {
+        alert("Please enter your email address first.");
+        return;
+      }
+      setIsPasswordStep(true);
+    } else {
+      if (!password.trim()) {
+        alert("Please enter your password.");
+        return;
+      }
+      alert("Signed in successfully!");
+    }
+  };
+
   const modal = (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* backdrop */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"
-      />
+      <div onClick={onClose} className="absolute inset-0" />
 
-      {/* modal content */}
       <div className="relative z-10 max-w-2xl w-full mx-4">
-        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 flex flex-col md:flex-row">
+        <div className="bg-white rounded-lg shadow-lg p-6  md:p-8  flex flex-col md:flex-row">
           <button
             onClick={onClose}
-            className="absolute -top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold"
+            className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold"
             aria-label="Close"
           >
             &times;
@@ -75,14 +89,33 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
               <span className="flex-1 border-t border-gray-300"></span>
             </div>
 
-            <label className="mb-2 text-sm font-medium text-gray-700">
-              Email Address
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Your Email address"
-              className="border border-gray-300 rounded px-4 py-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
-            />
+            {!isPasswordStep ? (
+              <>
+                <label className="mb-2 text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="border border-gray-300 rounded px-4 py-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
+                />
+              </>
+            ) : (
+              <>
+                <label className="mb-2 text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="border border-gray-300 rounded px-4 py-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
+                />
+              </>
+            )}
 
             <div className="flex items-center mb-4">
               <input
@@ -95,8 +128,11 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
               </label>
             </div>
 
-            <button className="bg-red-600 text-white rounded px-6 py-2 w-full font-semibold hover:bg-red-700 transition-colors mb-3">
-              Sign In
+            <button
+              onClick={handleSignIn}
+              className="bg-red-600 text-white rounded px-6 py-2 w-full font-semibold hover:bg-red-700 transition-colors mb-3"
+            >
+              {isPasswordStep ? "Sign In" : "Next"}
             </button>
 
             <p className="text-sm text-center mt-2">
