@@ -3,7 +3,10 @@ import cap from "../../assets/images/cap.png";
 
 const About: React.FC = () => {
   return (
-    <section className="w-full bg-[#F9E7E7] py-16 px-6 flex flex-col items-center justify-center">
+    <section
+      id="about"
+      className="w-full bg-[#F9E7E7] py-16 px-6 flex flex-col items-center justify-center"
+    >
       <div className="max-w-6xl w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-16">
         <div className="flex  flex-col justify-between">
           <div className="w-14 h-14 bg-white rounded-2xl shadow flex items-center justify-center">

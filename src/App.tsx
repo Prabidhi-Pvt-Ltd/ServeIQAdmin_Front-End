@@ -1,9 +1,9 @@
-import { Navbar } from "./components/common/navbar";
+import Navbar from "./components/common/navbar/Navbar";
 import { Footer } from "./components/common/footer";
 import { Home } from "./pages";
 import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
-// Extend Window interface
 declare global {
   interface Window {
     googleTranslateElementInit: () => void;
@@ -14,7 +14,6 @@ declare global {
 function App() {
   useEffect(() => {
     const initializeGoogleTranslate = () => {
-      // Remove existing Google Translate elements
       const existingScript = document.querySelector(
         'script[src*="translate.google.com"]'
       );
@@ -27,7 +26,6 @@ function App() {
         existingFrame.remove();
       }
 
-      // Initialize Google Translate
       const googleTranslateElementInit = () => {
         if (window.google && window.google.translate) {
           new window.google.translate.TranslateElement(
@@ -45,13 +43,11 @@ function App() {
 
       window.googleTranslateElementInit = googleTranslateElementInit;
 
-      // Load Google Translate script
       const script = document.createElement("script");
       script.src =
         "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
 
-      // Add error handling
       script.onerror = () => {
         console.error("Failed to load Google Translate script");
       };
@@ -59,14 +55,12 @@ function App() {
       document.body.appendChild(script);
 
       return () => {
-        // Cleanup function
         if (document.body.contains(script)) {
           document.body.removeChild(script);
         }
       };
     };
 
-    // Initialize with a small delay to ensure DOM is ready
     const timer = setTimeout(initializeGoogleTranslate, 100);
 
     return () => {
@@ -74,7 +68,6 @@ function App() {
     };
   }, []);
 
-  // Add CSS to hide Google Translate banner and improve styling
   useEffect(() => {
     const style = document.createElement("style");
     style.textContent = `
@@ -112,7 +105,12 @@ function App() {
   return (
     <>
       <Navbar />
-      <Home />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        {/* <Route path="/about" element={<AboutUs />} /> */}
+      </Routes>
       <Footer />
     </>
   );

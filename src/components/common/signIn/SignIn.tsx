@@ -1,6 +1,8 @@
-// src/components/common/SignIn/SignIn.tsx
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import process from "process";
 
 type Props = {
   isOpen: boolean;
@@ -8,16 +10,19 @@ type Props = {
 };
 
 const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
+
   const [isPasswordStep, setIsPasswordStep] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // close on ESC
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -32,27 +37,40 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleSignIn = () => {
+    setError("");
+
     if (!isPasswordStep) {
-      if (!email.trim()) {
-        alert("Please enter your email address first.");
+      if (!username.trim()) {
+        setError("Please enter your username first.");
         return;
       }
       setIsPasswordStep(true);
     } else {
       if (!password.trim()) {
-        alert("Please enter your password.");
+        setError("Please enter your password.");
         return;
       }
-      alert("Signed in successfully!");
+
+      if (
+        username === import.meta.env.VITE_ADMIN_USERNAME &&
+        password === import.meta.env.VITE_ADMIN_PASSWORD
+      ) {
+        localStorage.setItem("isAdminLoggedIn", "true");
+        onClose();
+        navigate("/");
+        setError(
+          "We apologize, but the password you entered does not match our records. Please reconfirm your password and try again."
+        );
+      }
     }
   };
 
   const modal = (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div onClick={onClose} className="absolute inset-0" />
+      <div onClick={onClose} className="absolute inset-0 bg-transparent" />
 
       <div className="relative z-10 max-w-2xl w-full mx-4">
-        <div className="bg-white rounded-lg shadow-lg p-6  md:p-8  flex flex-col md:flex-row">
+        <div className="bg-white rounded-lg shadow-lg py-24 px-6 flex flex-col md:flex-row">
           <button
             onClick={onClose}
             className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold"
@@ -63,13 +81,13 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
 
           <div className="md:w-1/2 flex flex-col justify-center mb-6 md:mb-0 md:pr-6">
             <h2 className="text-lg md:text-xl font-semibold text-black">
-              Welcome Back to
+              Welcome Back
             </h2>
             <span className="text-2xl md:text-3xl font-bold text-red-600">
-              ServelQ <span className="text-black">.COM</span>
+              ServelQ <span className="text-black">Admin</span>
             </span>
             <p className="text-gray-700 mt-2">
-              Sign in to continue to your account
+              Sign in to continue to your admin dashboard
             </p>
           </div>
 
@@ -83,22 +101,24 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
               Continue with Google
             </button>
 
+            {/* Divider */}
             <div className="flex items-center mb-4">
               <span className="flex-1 border-t border-gray-300"></span>
               <span className="mx-2 text-sm text-gray-400">or</span>
               <span className="flex-1 border-t border-gray-300"></span>
             </div>
 
+            {/* Inputs */}
             {!isPasswordStep ? (
               <>
                 <label className="mb-2 text-sm font-medium text-gray-700">
-                  Email Address
+                  Admin Username
                 </label>
                 <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  placeholder="Enter admin username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="border border-gray-300 rounded px-4 py-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
                 />
               </>
@@ -107,16 +127,32 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
                 <label className="mb-2 text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border border-gray-300 rounded px-4 py-2 mb-3 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
-                />
+                <div className="relative mb-3">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border border-gray-300 rounded px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-red-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-2.5 text-gray-500"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+
+                {error && (
+                  <p className="text-sm text-red-600 mt-[-6px] mb-2 leading-tight">
+                    {error}
+                  </p>
+                )}
               </>
             )}
 
+            {/* Keep me signed in */}
             <div className="flex items-center mb-4">
               <input
                 type="checkbox"
@@ -128,6 +164,7 @@ const SignIn: React.FC<Props> = ({ isOpen, onClose }) => {
               </label>
             </div>
 
+            {/* Submit Button */}
             <button
               onClick={handleSignIn}
               className="bg-red-600 text-white rounded px-6 py-2 w-full font-semibold hover:bg-red-700 transition-colors mb-3"

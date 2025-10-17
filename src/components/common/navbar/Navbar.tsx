@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Search, Loader2 } from "lucide-react";
+import { Menu, X, Search, Loader2, Globe } from "lucide-react";
 import logo from "../../../assets/images/logo.png";
 import Cookies from "js-cookie";
 import { services } from "../../../data/Services";
-import SignIn from "../signIn/SignIn";
+import { SignIn } from "../signIn";
 import SignUp from "../register/SignUp";
+import { NavLink } from "react-router-dom";
+import { useRef } from "react";
+
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +17,22 @@ export default function Navbar() {
   const [showRegister, setShowRegister] = useState(false);
 
   const [filteredServices, setFilteredServices] = useState<typeof services>([]);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navbarHeight = 72;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const languages = [
     {
       code: "en",
@@ -170,7 +189,6 @@ export default function Navbar() {
         </svg>
       ),
     },
-
     {
       code: "pt",
       name: "Português",
@@ -237,7 +255,7 @@ export default function Navbar() {
                 />
                 <path
                   fill="#fff"
-                  d="m180.7 355.8-27 9 21.2 19.8-28.5-1.8 11.7 26.2-25.5-12.3.5 28.6-18.8-20.9-10.7 26.6-9.2-26.3-20.3 20.6 1.8-27.7L49 409l12.6-25-29.3.6 21.5-18.3-27.3-10.5 27-9L32.2 327l28.4 1.8L49 302.6l25.6 12.3-.5-28.6 18.8 20.9 10.7-26.6 9.1 26.3 20.4-20.6-1.9 27.7 27-11.4-12.7 25 29.4-.6-21.5 18.3zm-32.4-184.7-11.3 8.4 5.6 4.6a94 94 0 0 0 30.7-36c1.8 21.3-17.7 69-68.7 69.5a70.6 70.6 0 0 1-71.5-70.3c10 18.2 16.2 27 32 36.5l4.7-4.4-10.6-8.9 13.7-3.6-7.4-12.4 14.4 1-1.8-14.4 12.6 7.4 4-13.5 9 10.8 8.5-10.3 4.6 14 11.8-8.2-1.5 14.3 14.2-1.7-6.7 13.2z"
+                  d="m180.7 355.8-27 9 21.2 19.8-28.5-1.8 11.7 26.2-25.5-12.3.5 28.6-18.8-20.9-10.7 26.6-9.2-26.3-20.3 20.6 1.8-27.7 27-11.4-12.7 25 29.4-.6-21.5 18.3zm-32.4-184.7-11.3 8.4 5.6 4.6a94 94 0 0 0 30.7-36c1.8 21.3-17.7 69-68.7 69.5a70.6 70.6 0 0 1-71.5-70.3c10 18.2 16.2 27 32 36.5l4.7-4.4-10.6-8.9 13.7-3.6-7.4-12.4 14.4 1-1.8-14.4 12.6 7.4 4-13.5 9 10.8 8.5-10.3 4.6 14 11.8-8.2-1.5 14.3 14.2-1.7-6.7 13.2z"
                 />
               </g>
             </g>
@@ -282,106 +300,155 @@ export default function Navbar() {
       <SignIn isOpen={showLogin} onClose={() => setShowLogin(false)} />
       <SignUp isOpen={showRegister} onClose={() => setShowRegister(false)} />
 
-      <nav className="bg-white border-b border-neutral-200 fixed top-0 left-0 w-full z-50">
-        <div className=" mx-auto px-4 sm:px-6 lg:px-10 py-3">
-          <div className="flex items-center justify-between">
-            {/* ✅ Logo */}
-            <div className="flex items-center flex-shrink-0">
-              <img
-                src={logo}
-                alt="Logo"
-                className="h-10 sm:h-12 md:h-14 lg:h-20 lg:w-60 object-contain"
-              />
+      <nav className="bg-white border-b border-gray-200 fixed top-0 left-0 w-full z-50 ">
+        <div className="max-w-[1600px] mx-auto px-4 xl:px-8">
+          <div className="flex items-center justify-between h-16 xl:h-[72px] gap-2">
+            <div className="flex-shrink-0">
+              <NavLink to="/">
+                <img
+                  src={logo || "/placeholder.svg"}
+                  alt="ServeIQ Logo"
+                  className="h-20 object-contain"
+                />
+              </NavLink>
             </div>
 
-            {/* ✅ Desktop Menu */}
-            <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-              <a
-                href="/"
-                className="text-neutral-600 text-sm hover:text-red-700 transition-colors"
+            <div className="hidden xl:flex items-center gap-6">
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `text-sm font-medium pb-1 border-b-2 transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-red-600 border-red-600"
+                      : "text-gray-700 border-transparent hover:text-red-600"
+                  }`
+                }
               >
                 Home
-              </a>
-              <a
-                href="/about"
-                className="text-neutral-600 text-sm hover:text-red-700 transition-colors"
+              </NavLink>
+
+              <NavLink
+                to="/about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("about");
+                }}
+                className={({ isActive }) =>
+                  `text-sm font-medium pb-1 border-b-2 transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-red-600 border-red-600"
+                      : "text-gray-700 border-transparent hover:text-red-600"
+                  }`
+                }
               >
-                About Us
-              </a>
-              <a
-                href="/plans"
-                className="text-neutral-600 text-sm hover:text-red-700 transition-colors"
+                About us
+              </NavLink>
+
+              <NavLink
+                to="/services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("services");
+                }}
+                className={({ isActive }) =>
+                  `text-sm font-medium pb-1 border-b-2 transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-red-600 border-red-600"
+                      : "text-gray-700 border-transparent hover:text-red-600"
+                  }`
+                }
               >
-                Plan & Services
-              </a>
-              <a
-                href="/blogs"
-                className="text-neutral-600 text-sm hover:text-red-700 transition-colors"
+                Plan and Services
+              </NavLink>
+              <NavLink
+                to="/blogs"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("blogs");
+                }}
+                className={({ isActive }) =>
+                  `text-sm font-medium pb-1 border-b-2 transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-red-600 border-red-600"
+                      : "text-gray-700 border-transparent hover:text-red-600"
+                  }`
+                }
               >
                 Blogs
-              </a>
-              <a
-                href="/customer-care"
-                className="text-neutral-600 text-sm hover:text-red-700 transition-colors"
+              </NavLink>
+
+              <NavLink
+                to="/customer-care"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("customer-care");
+                }}
+                className={({ isActive }) =>
+                  `text-sm font-medium pb-1 border-b-2 transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-red-600 border-red-600"
+                      : "text-gray-700 border-transparent hover:text-red-600"
+                  }`
+                }
               >
                 Customer Care
-              </a>
+              </NavLink>
             </div>
 
-            {/* ✅ Search Bar */}
-            <div className="hidden md:flex relative flex-1 max-w-md xl:max-w-lg mx-4">
-              <div className="flex items-center w-full px-4 py-2 rounded-full border border-neutral-200 bg-neutral-50">
-                <Search className="w-5 h-5 text-neutral-400" />
+            <div className="hidden xl:flex relative flex-1 max-w-xs">
+              <div className="flex items-center w-full px-4 py-2 rounded-full border border-gray-200 bg-gray-50 gap-2">
+                <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
                 <input
                   type="text"
-                  placeholder="Search services you want?"
+                  placeholder="Search services you want ?"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 bg-transparent outline-none text-sm text-neutral-600 placeholder:text-neutral-400"
+                  className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder:text-gray-400 min-w-0"
                 />
               </div>
 
-              {/* --- Suggestions Dropdown --- */}
               {filteredServices.length > 0 && (
-                <ul className="absolute top-12 left-0 w-full bg-white border border-neutral-200 rounded-xl shadow-lg z-50 max-h-60 overflow-y-auto">
+                <ul className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 max-h-60 overflow-y-auto">
                   {filteredServices.map((service) => (
-                    <li
+                    <a
+                      href={`/`}
                       key={service.id}
-                      className="px-4 py-2 flex items-center gap-3 hover:bg-neutral-100 cursor-pointer"
+                      className="px-4 py-2 flex items-center gap-3 hover:bg-gray-50 cursor-pointer"
                     >
                       <img
-                        src={service.image}
+                        src={service.image || "/placeholder.svg"}
                         alt={service.title}
                         className="w-8 h-8 rounded object-cover"
                       />
-                      <span className="text-sm text-neutral-700">
+                      <span className="text-sm text-gray-700">
                         {service.title}
                       </span>
-                    </li>
+                    </a>
                   ))}
                 </ul>
               )}
             </div>
 
-            {/* ✅ Buttons */}
-            <div className="hidden md:flex items-center gap-3 relative">
-              {/* Language Dropdown */}
+            <div className="hidden xl:flex items-center gap-2 flex-shrink-0">
               <div className="relative">
                 <button
                   onClick={() => setShowLanguages(!showLanguages)}
-                  className="flex items-center gap-2 px-5 py-2 rounded-2xl border border-red-600 text-gray-700 text-sm font-medium hover:bg-red-700 hover:text-white transition"
+                  className="flex items-center gap-2 px-3 py-2 rounded-full border border-red-600 text-gray-700 text-sm font-medium hover:bg-red-600 hover:text-white transition-colors whitespace-nowrap"
+                  aria-expanded={showLanguages}
                 >
+                  <Globe className="w-4 h-4 flex-shrink-0" />
                   <span>Select Language</span>
                 </button>
 
                 {showLanguages && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+                  <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
                     <ul className="py-1">
                       {languages.map((lang) => (
                         <li key={lang.code}>
                           <button
                             onClick={() => handleLanguageSelect(lang.code)}
-                            className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                            className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
                           >
                             <span className="text-lg">{lang.flag}</span>
                             <span>{lang.name}</span>
@@ -393,77 +460,111 @@ export default function Navbar() {
                 )}
               </div>
 
-              {/* Register & Login */}
               <button
                 onClick={() => setShowRegister(true)}
-                className="px-5 py-2 rounded-2xl border-2 border-red-700 text-red-700 text-sm font-semibold hover:bg-red-50 transition"
+                className="px-4 py-2 rounded-full border-2 border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition-colors whitespace-nowrap"
               >
                 Register
               </button>
+
               <button
                 onClick={() => setShowLogin(true)}
-                className="px-5 py-2 rounded-2xl bg-red-700 text-white text-sm font-semibold hover:bg-red-800 transition"
+                className="px-4 py-2 rounded-full bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors whitespace-nowrap"
               >
                 Login
               </button>
             </div>
 
-            {/* ✅ Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 rounded-md text-neutral-700 hover:bg-neutral-100 transition"
+              className="xl:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 transition flex-shrink-0"
+              aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 
-          {/* ✅ Mobile Dropdown Menu */}
           {isOpen && (
-            <div className="lg:hidden mt-3 bg-white border-t border-neutral-200 rounded-lg shadow-md">
-              <div className="flex flex-col px-4 py-3 space-y-2">
-                {[
-                  "Home",
-                  "About Us",
-                  "Plan & Services",
-                  "Blogs",
-                  "Customer Care",
-                ].map((item, i) => (
-                  <a
-                    key={i}
-                    href={`/${item.toLowerCase().replace(/ & | /g, "-")}`}
-                    className="text-neutral-700 hover:text-red-700 py-2"
-                  >
-                    {item}
-                  </a>
-                ))}
+            <div className="xl:hidden border-t border-gray-200 bg-white">
+              <div className="flex flex-col px-4 py-3 space-y-3">
+                <div className="relative pb-2">
+                  <div className="flex items-center w-full px-4 py-2 rounded-full border border-gray-200 bg-gray-50 gap-2">
+                    <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Search services you want ?"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder:text-gray-400 min-w-0"
+                    />
+                  </div>
 
-                {/* Search Bar */}
-                <div className="flex items-center gap-3 mt-3 px-3 py-2 rounded-full border border-neutral-200 bg-neutral-50">
-                  <Search className="w-5 h-5 text-neutral-400" />
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="flex-1 bg-transparent outline-none text-sm text-neutral-600"
-                  />
+                  {filteredServices.length > 0 && (
+                    <ul className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 max-h-60 overflow-y-auto">
+                      {filteredServices.map((service) => (
+                        <a
+                          href={`/`}
+                          key={service.id}
+                          className="px-4 py-2 flex items-center gap-3 hover:bg-gray-50 cursor-pointer"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <img
+                            src={service.image || "/placeholder.svg"}
+                            alt={service.title}
+                            className="w-8 h-8 rounded object-cover"
+                          />
+                          <span className="text-sm text-gray-700">
+                            {service.title}
+                          </span>
+                        </a>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
-                {/* Language */}
+                {[
+                  { label: "Home", id: "home" },
+                  { label: "About us", id: "about" },
+                  { label: "Plan and Services", id: "services" },
+                  { label: "Blogs", id: "blogs" },
+                  { label: "Customer Care", id: "customer-care" },
+                ].map((item, i) => (
+                  <NavLink
+                    key={i}
+                    to="/"
+                    className={({ isActive }) =>
+                      `text-sm font-medium py-2 ${
+                        isActive ? "text-red-600" : "text-gray-700"
+                      }`
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(false);
+                      scrollToSection(item.id);
+                    }}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
                 <button
                   onClick={() => setShowLanguages(!showLanguages)}
-                  className="mt-3 flex items-center justify-between px-4 py-2 rounded-2xl border border-red-600 text-gray-700 text-sm hover:bg-red-700 hover:text-white transition"
+                  className="mt-3 flex items-center justify-between px-4 py-2 rounded-full border border-red-600 text-gray-700 text-sm font-medium hover:bg-red-600 hover:text-white transition"
                 >
-                  Select Language
-                  <span className="text-lg">🌐</span>
+                  <span>Select Language</span>
+                  <Globe className="w-4 h-4" />
                 </button>
-                {/* Language Dropdown for Mobile */}
+
                 {showLanguages && (
-                  <div className="mt-2 w-full bg-white border border-neutral-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+                  <div className="mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
                     <ul className="py-1">
                       {languages.map((lang) => (
                         <li key={lang.code}>
                           <button
-                            onClick={() => handleLanguageSelect(lang.code)}
-                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+                            onClick={() => {
+                              handleLanguageSelect(lang.code);
+                              setIsOpen(false);
+                            }}
+                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                           >
                             <span className="text-lg">{lang.flag}</span>
                             <span>{lang.name}</span>
@@ -474,12 +575,23 @@ export default function Navbar() {
                   </div>
                 )}
 
-                {/* Auth Buttons */}
-                <div className="flex flex-col gap-2 mt-4">
-                  <button className="px-4 py-2 rounded-2xl border-2 border-red-700 text-red-700 text-sm font-semibold hover:bg-red-50 transition">
+                <div className="flex flex-col gap-2 mt-4 pt-3 border-t border-gray-200">
+                  <button
+                    onClick={() => {
+                      setShowRegister(true);
+                      setIsOpen(false);
+                    }}
+                    className="px-4 py-2 rounded-full border-2 border-red-600 text-red-600 text-sm font-semibold hover:bg-red-600 hover:text-white transition"
+                  >
                     Register
                   </button>
-                  <button className="px-4 py-2 rounded-2xl bg-red-700 text-white text-sm font-semibold hover:bg-red-800 transition">
+                  <button
+                    onClick={() => {
+                      setShowLogin(true);
+                      setIsOpen(false);
+                    }}
+                    className="px-4 py-2 rounded-full bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition"
+                  >
                     Login
                   </button>
                 </div>
@@ -489,7 +601,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Required for Google Translate */}
       <div id="google_translate_element" className="hidden"></div>
     </>
   );

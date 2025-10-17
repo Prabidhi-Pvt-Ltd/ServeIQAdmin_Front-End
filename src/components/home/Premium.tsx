@@ -68,10 +68,18 @@ export default function Index() {
               </div>
             </div>
 
-            <button className="flex items-center justify-center gap-3 px-5 py-3 rounded-lg text-white font-semibold text-base leading-5 bg-primary  transition-colors">
-              <span>Pre-register now</span>
+            <button
+              className="
+    flex items-center justify-center gap-3 px-6 py-3 rounded-lg text-white font-semibold text-base leading-5 
+    bg-red-600 hover:bg-red-700 focus:bg-red-800 active:scale-95 transition-all duration-200 
+    shadow-md hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-red-300
+  "
+            >
+              <span className="transition-colors duration-300 hover:text-yellow-100">
+                Pre-register now
+              </span>
               <svg
-                className="w-5 h-5"
+                className="w-5 h-5 ml-1 transition-transform duration-200 group-hover:translate-x-1"
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

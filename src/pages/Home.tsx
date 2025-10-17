@@ -10,16 +10,10 @@ import {
   Connect,
   CountrySection,
 } from "../components/home";
-// import {
-//   SubscribePopup,
-//   SignIn,
-//   Password,
-//   SignUp,
-// } from "../components/susbscribe";
 
 export default function Home() {
   return (
-    <>
+    <section id="home">
       <Hero />
       <Services />
       <Feature />
@@ -30,10 +24,6 @@ export default function Home() {
       <NationSection />
       <Blog />
       <Connect />
-      {/* <SubscribePopup />
-
-      <Password />
-      <SignUp /> */}
-    </>
+    </section>
   );
 }

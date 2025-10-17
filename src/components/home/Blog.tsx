@@ -27,7 +27,7 @@ const Blog = () => {
   ];
 
   return (
-    <section className="bg-red-50 py-16">
+    <section id="blogs" className="bg-red-50 py-16">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row lg:items-start gap-10">
           {/* Blog Cards Section */}

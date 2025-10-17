@@ -46,7 +46,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white py-16 px-8">
+    <section id="services" className="bg-white py-16 px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="container">
@@ -100,7 +100,7 @@ const Services: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

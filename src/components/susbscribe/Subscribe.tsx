@@ -3,14 +3,12 @@ import subscribe from "../../assets/images/formImages/subscribe.png";
 const SubscribePopup = () => (
   <div className=" flex items-center justify-center  bg-opacity-30 z-50">
     <div className="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center max-w-2xl w-full relative">
-      {/* Optional close button in top right */}
       <button
         className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl font-bold"
         aria-label="Close"
       >
         &times;
       </button>
-      {/* Left Side: Illustration */}
       <div className="md:w-1/2 flex justify-center md:justify-start mb-6 md:mb-0">
         <img
           src={subscribe}
@@ -19,7 +17,6 @@ const SubscribePopup = () => (
         />
       </div>
 
-      {/* Right Side: Content */}
       <div className="md:w-1/2 flex flex-col justify-center items-center md:items-start text-center md:text-left">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
           Subscribe to our Newsletter!

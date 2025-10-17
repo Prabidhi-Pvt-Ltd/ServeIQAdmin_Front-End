@@ -46,3 +46,67 @@ body {
 #google_translate_element {
   display: none !important; /* Hide Google’s default dropdown */
 }
+
+@layer utilities {
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 1s ease-out forwards;
+  }
+}
+
+@media (max-width: 1336px) {
+  .navbar-link {
+    font-size: 0.8rem !important; 
+  }
+
+  .navbar-btn {
+    font-size: 0.8rem !important; /* Smaller register/login text */
+    padding: 0.4rem 0.9rem !important;
+  }
+
+  .navbar-search input {
+    font-size: 0.8rem !important;
+  }
+}
+
+
+@media (min-width:900px) and (max-width:1150px) {
+  .navbar-link {
+    font-size: 0.65rem !important;
+  }
+
+  .navbar-btn {
+    font-size: 0.7rem !important; 
+    padding: 0.35rem 0.8rem !important;
+  }
+
+  .navbar-search input {
+    font-size: 0.65rem !important; /* Smaller text inside input */
+  }
+}
+
+@keyframes slowbounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-slowbounce {
+  animation: slowbounce 1.5s infinite;
+}
+html {
+  scroll-behavior: smooth;
+}
