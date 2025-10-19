@@ -1,6 +1,7 @@
 import premiumImage1 from "../../assets/images/premium/image1.png";
 import premiumImage2 from "../../assets/images/premium/image2.png";
 import logo from "../../assets/images/logo.png";
+import "../../styles/premium.css";
 export default function Index() {
   return (
     <div className="bg-[#F9E7E7] px-6 py-16 md:px-12 md:py-24 lg:py-32">
@@ -68,18 +69,10 @@ export default function Index() {
               </div>
             </div>
 
-            <button
-              className="
-    flex items-center justify-center gap-3 px-6 py-3 rounded-lg text-white font-semibold text-base leading-5 
-    bg-red-600 hover:bg-red-700 focus:bg-red-800 active:scale-95 transition-all duration-200 
-    shadow-md hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-red-300
-  "
-            >
-              <span className="transition-colors duration-300 hover:text-yellow-100">
-                Pre-register now
-              </span>
+            <button className="btn-preregister flex items-center justify-center gap-3 px-8 py-4 rounded-lg text-white font-bold text-lg leading-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 active:scale-95 transition-all duration-200">
+              <span className="relative z-10">Pre-register now</span>
               <svg
-                className="w-5 h-5 ml-1 transition-transform duration-200 group-hover:translate-x-1"
+                className="w-5 h-5 ml-1 transition-transform duration-200 group-hover:translate-x-1 relative z-10"
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

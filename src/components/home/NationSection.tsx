@@ -1,4 +1,3 @@
-// src/components/nation/NationWithBlurredCountries.tsx
 import React from "react";
 import CountrySectionBackground from "./CountrySectionBackground";
 import flag from "../../assets/images/flag.png";
@@ -6,26 +5,21 @@ import flag from "../../assets/images/flag.png";
 const NationWithBlurredCountries: React.FC = () => {
   return (
     <section className="relative w-full">
-      {/* Background: blurred country grid */}
       <div
         className="absolute inset-0 -z-20 overflow-hidden"
         aria-hidden="true"
       >
-        {/* optional overlay tint to lower contrast behind CTA */}
         <div className="absolute inset-0 "></div>
 
-        {/* the actual country grid we will blur and slightly scale */}
         <div className="absolute inset-0 transform scale-105 filter blur-lg">
-          {/* we use pointer-events-none so background doesn't intercept clicks */}
           <div className="pointer-events-none w-full h-full">
             <CountrySectionBackground />
           </div>
         </div>
       </div>
 
-      {/* Overlay content (centered CTA) */}
       <div className="relative z-10 flex items-center justify-center  px-4">
-        <div className="max-w-xl w-full text-center p-5  backdrop-blur-sm rounded-2xl shadow-lg  ">
+        <div className="max-w-xl w-full text-center p-5  backdrop-blur-sm rounded-2xl   ">
           <img
             src={flag}
             alt="Nation flag"

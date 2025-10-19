@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Mail } from "lucide-react";
+import { Mail, Eye, EyeOff } from "lucide-react";
 
 type Props = {
   isOpen: boolean;
@@ -9,6 +9,8 @@ type Props = {
 
 const SignUp: React.FC<Props> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -25,7 +27,26 @@ const SignUp: React.FC<Props> = ({ isOpen, onClose }) => {
   });
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      // Reset form when modal closes
+      setStep(1);
+      setShowPassword(false);
+      setShowConfirmPassword(false);
+      setFormData({
+        fullName: "",
+        email: "",
+        contactNumber: "",
+        country: "",
+        contactNumber2: "",
+        location: "",
+        propertyType: "",
+        propertyName: "",
+        panVat: "",
+        password: "",
+        confirmPassword: "",
+      });
+      return;
+    }
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -162,9 +183,9 @@ const SignUp: React.FC<Props> = ({ isOpen, onClose }) => {
                   >
                     <option value="">Select a country</option>
                     <option value="us">United States</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="ca">Canada</option>
-                    <option value="au">Australia</option>
+                    <option value="ne">Nepal</option>
+                    <option value="it">Italy</option>
+                    <option value="in">India</option>
                   </select>
                 </div>
 
@@ -256,28 +277,52 @@ const SignUp: React.FC<Props> = ({ isOpen, onClose }) => {
                   <label className="block text-xs font-medium text-gray-700 mb-0.5">
                     Create Password <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Create a strong password"
-                    className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-sm"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Create a strong password"
+                      className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2 top-2 text-gray-500"
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-0.5">
                     Confirm Password <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Re-enter your password"
-                    className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-sm"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="Re-enter your password"
+                      className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="absolute right-2 top-2 text-gray-500"
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff size={16} />
+                      ) : (
+                        <Eye size={16} />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

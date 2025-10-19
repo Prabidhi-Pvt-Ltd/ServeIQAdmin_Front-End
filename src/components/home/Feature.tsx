@@ -22,14 +22,12 @@ const Feature: React.FC = () => {
         </p>
         <p className="text-sm text-[#808080]">
           What happens when you book a{" "}
-          <span className="font-semibold text-black">DEMO</span> with us
+          <span className="font-semibold text-red-600">DEMO</span> with us
         </p>
       </div>
 
-      {/* Feature Card */}
       <div className="max-w-6xl w-full bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
         <div className="flex flex-col md:flex-row items-center">
-          {/* Image Section */}
           <div className="md:w-1/2 w-full p-4">
             <img
               src={feature.image}
@@ -38,7 +36,6 @@ const Feature: React.FC = () => {
             />
           </div>
 
-          {/* Text Section */}
           <div className="md:w-1/2 w-full px-6 py-4">
             <h2 className="text-xl md:text-2xl font-semibold text-[#D00000] mb-4">
               {feature.title}
@@ -58,7 +55,7 @@ const Feature: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className="flex justify-start gap-2 mt-4 w-full max-w-6xl">
         {features.map((_, idx) => (
           <button
             key={idx}
